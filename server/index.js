@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 // *** เพิ่ม: ใช้ cors middleware ก่อน routes ทั้งหมด ***
 app.use(cors()); // อนุญาตทุก origin (สำหรับการพัฒนา)
 // ถ้าต้องการระบุ origin ที่แน่นอน:
-// app.use(cors({ origin: 'http://localhost:5173' })); // ให้ตรงกับพอร์ต Frontend ของคุณ
+// app.use(cors({ origin: 'http://localhost:5173' })); // ให้ตรงกับพอร์ต Frontend 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

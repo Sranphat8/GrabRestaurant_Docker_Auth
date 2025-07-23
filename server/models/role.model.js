@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize"
 import sequelize from "./db.js"
-const Restaurant = sequelize.define("Restaurant", {
+
+const Role = sequelize.define("role", {
     
     username: {
         type: DataTypes.STRING,
@@ -21,9 +22,13 @@ const Restaurant = sequelize.define("Restaurant", {
     }
 });
 
-Restaurant.sync({ force: false }).then(() => {
-    console.log("Table created or already exists.");
+Role.sync({ force: true }).then(() => {
+    Role.create({ id: 1, name: "user" });
+    Role.create({ id: 2, name: "moderator" });
+    Role.create({ id: 3, name: "admin" });
+
 }).catch((error) => {
     console.log("Error creating Restaurant table:", error);
 });
-export default Restaurant;
+
+export default Role;
