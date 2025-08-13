@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2'; // สำหรับแสดงข้อความแจ้งเตือน
 
-// กำหนด URL ของ Backend API สำหรับการลงทะเบียน
-const API_REGISTER_URL = 'http://localhost:5000/api/v1/auth/register'; // ตรวจสอบให้แน่ใจว่าตรงกับ Backend ของคุณ
+// กำหนด URL ของ Backend API สำหรับการเข้าสู่ระบบ
+const API_LOGIN_URL = 'http://localhost:5000/api/v1/auth/login'; // เปลี่ยนเป็น /signin ถ้า backend ใช้ endpoint นี้
 
-const Register = () => {
+const Login = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -30,7 +30,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch(API_REGISTER_URL, {
+            const response = await fetch(API_LOGIN_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,24 +43,32 @@ const Register = () => {
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
 
-            // สมัครสมาชิกสำเร็จ
-            Swal.fire({
-                icon: 'success',
-                title: 'สมัครสมาชิกสำเร็จ!',
-                text: 'คุณสามารถเข้าสู่ระบบได้แล้ว',
-                showConfirmButton: false,
-                timer: 2000,
-                customClass: { popup: "rounded-xl" },
-            }).then(() => {
-                window.location.href = '/login'; // นำทางไปหน้า Login
-            });
+            const result = await response.json();
+            // สมมติว่า Backend ส่ง token มาใน field ชื่อ 'token'
+            const token = result.token; 
+
+            if (token) {
+                localStorage.setItem('jwtToken', token); // เก็บ JWT ไว้ใน localStorage
+                Swal.fire({
+                    icon: 'success',
+                    title: 'เข้าสู่ระบบสำเร็จ!',
+                    text: 'ยินดีต้อนรับ',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    customClass: { popup: "rounded-xl" },
+                }).then(() => {
+                    window.location.href = '/'; // นำทางกลับหน้าหลัก
+                });
+            } else {
+                throw new Error('ไม่ได้รับ Token จากเซิร์ฟเวอร์');
+            }
 
         } catch (error) {
-            console.error('Error during registration:', error);
+            console.error('Error during login:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'เกิดข้อผิดพลาด!',
-                text: `ไม่สามารถสมัครสมาชิกได้: ${error.message}`,
+                text: `ไม่สามารถเข้าสู่ระบบได้: ${error.message}`,
                 customClass: { popup: "rounded-xl" },
             });
         }
@@ -69,7 +77,7 @@ const Register = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 flex items-center justify-center px-4">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
-                <h2 className="text-3xl font-bold text-center text-gray-800">สมัครสมาชิก</h2>
+                <h2 className="text-3xl font-bold text-center text-gray-800">เข้าสู่ระบบ</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="username" className="block text-sm font-medium text-gray-700">ชื่อผู้ใช้</label>
@@ -99,13 +107,13 @@ const Register = () => {
                         type="submit"
                         className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        สมัครสมาชิก
+                        เข้าสู่ระบบ
                     </button>
                 </form>
                 <p className="text-center text-sm text-gray-600">
-                    มีบัญชีอยู่แล้ว?{' '}
-                    <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-                        เข้าสู่ระบบที่นี่
+                    ยังไม่มีบัญชี?{' '}
+                    <a href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        สมัครสมาชิกที่นี่
                     </a>
                 </p>
             </div>
@@ -113,4 +121,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;

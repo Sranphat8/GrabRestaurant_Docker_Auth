@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2"; // Used to display alert popups
 import Navbar from "../components/Navbar"; // Navbar at the top
 import Restaurants from "../components/Restaurants"; // Component to display the list of restaurants
+import RestaurantsService from "../services/restaurant.service"; // Service to handle API requests related to restaurants
+
+
 
 // Define the base URL for your Backend API
 const API_BASE_URL = 'http://localhost:5000/api/v1/restaurant'; // <-- Changed to your Backend API URL
@@ -12,6 +15,26 @@ const Home = () => {
   const [keyword, setKeyword] = useState(""); // Stores the search keyword
   const [loading, setLoading] = useState(true); // Loading status
   const [error, setError] = useState(null); // Error message
+
+  const getAllRestaurants = async () => {
+    try {
+      const response = await RestaurantsService.getAllRestaurants();
+      console.log(response);
+
+      if (response.status === 200) {
+        setRestaurants(response.data); // Set the fetched restaurant data to state
+        setFilteredRestaurants(response.data); // Initialize filtered restaurants with all data
+      }
+    } catch (err) {
+      Swal.fire({
+        title: "Get All Restaurants",
+        icon: "error",
+        text: error?.response?.data?.message || error.message,
+      });
+    }
+  };
+  getAllRestaurants(); // Fetch all restaurants when the component mounts
+  
 
   // useEffect Hook to fetch restaurant data from the API when the component mounts
   useEffect(() => {
