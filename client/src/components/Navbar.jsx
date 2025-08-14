@@ -1,3 +1,4 @@
+// นำเข้า React (จำเป็นเมื่อเขียน JSX)
 import React from "react";
 
 const Navbar = () => {
