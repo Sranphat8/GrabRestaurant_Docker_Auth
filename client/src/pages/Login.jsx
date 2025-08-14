@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2'; // สำหรับแสดงข้อความแจ้งเตือน
 
 // กำหนด URL ของ Backend API สำหรับการเข้าสู่ระบบ
-const API_LOGIN_URL = 'http://localhost:5000/api/v1/auth/login'; // เปลี่ยนเป็น /signin ถ้า backend ใช้ endpoint นี้
+const API_LOGIN_URL = 'http://localhost:5000/api/v1/auth/login'; // ตรวจสอบให้แน่ใจว่าตรงกับ Backend ของคุณ
 
 const Login = () => {
     const [formData, setFormData] = useState({

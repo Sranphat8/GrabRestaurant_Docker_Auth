@@ -1,7 +1,9 @@
-// นำเข้า React (จำเป็นเมื่อเขียน JSX)
 import React from "react";
+import { useAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user } = useAuthContext();
+
   return (
     // Header หลักของ Navbar
     // จัดให้แสดงอยู่ด้านบนสุดของหน้าจอ และมีความโปร่งใส / blur 

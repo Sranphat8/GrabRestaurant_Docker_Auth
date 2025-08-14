@@ -9,7 +9,6 @@ const instance = axios.create({
     },
 });
 
-
 //add interceptors to request object
 instance.interceptors.request.use(
     (config) => {

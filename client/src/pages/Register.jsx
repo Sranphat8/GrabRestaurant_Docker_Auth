@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2'; // สำหรับแสดงข้อความแจ้งเตือน
 
 // กำหนด URL ของ Backend API สำหรับการลงทะเบียน
-const API_REGISTER_URL = 'http://localhost:5000/api/v1/auth/register'; // ตรวจสอบให้ตรงกับ backend
+const API_REGISTER_URL = 'http://localhost:5000/api/v1/auth/register'; // ตรวจสอบให้แน่ใจว่าตรงกับ Backend ของคุณ
 
-const Signup = () => {
+const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -113,4 +113,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default Register;
