@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     (config) => {
         //recieive after logged in
         const token = tokenService.getLocalAccessToken();
-        if(token) {
+        if (token) {
             config.headers["x-access-token"] = token;
         }
         return config;
@@ -23,4 +23,6 @@ instance.interceptors.request.use(
     (err) => {
         return Promise.reject(err);
     }
-)
+);
+
+export default instance;

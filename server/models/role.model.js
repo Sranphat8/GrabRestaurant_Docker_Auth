@@ -1,21 +1,16 @@
 import { DataTypes } from "sequelize";
-
-// Export เป็นฟังก์ชันที่รับ sequelize และ DataTypes
-export default (sequelize, DataTypes) => {
-  const Role = sequelize.define("role", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  });
-  return Role;
-};
-
+import sequelize from "./db.js";
+const Role = sequelize.define("role", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
 
 // Role.sync({ force: true })
 //   .then(() => {
@@ -26,4 +21,4 @@ export default (sequelize, DataTypes) => {
 //   .catch((error) => {
 //     console.log("Error creating role", error);
 //   });
-
+export default Role;

@@ -2,7 +2,7 @@ import db from "../models/index.js";
 const User = db.User;
 const Role = db.Role;
 import config from "../config/auth.config.js";
-import bcrypt from "bcryptjs"; 
+import bcrypt from "bcryptjs"; //เข้ารหัส
 import jwt from "jsonwebtoken";
 //import operator
 import { Op } from "sequelize";
@@ -82,8 +82,7 @@ authController.signIn = async (req, res) => {
       }
       const passwordIsValid = bcrypt.compareSync(password, user.password);
       if (!passwordIsValid) {
-        // *** FIX: Added 'return' here to stop execution
-        return res.status(401).send({ message: "Invalid password" });
+        res.status(401).send({ message: "Invalid password" });
       }
       //Valid User
       const token = jwt.sign({ username: user.username }, config.secret, {
