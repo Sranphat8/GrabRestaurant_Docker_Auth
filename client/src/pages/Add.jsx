@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "../components/NavBar"; // เพิ่ม NavBar เหมือนอาจารย์
+import NavBar from "../components/NavBar"; 
 import Swal from "sweetalert2";
 
 const API_BASE_URL = "http://localhost:5000/api/v1/restaurants";
@@ -58,7 +58,7 @@ const Add = () => {
         timer: 1500,
         customClass: { popup: "rounded-xl" },
       }).then(() => {
-        window.location.href = "/"; // กลับหน้า Home
+        window.location.href = "/"; 
       });
     } catch (err) {
       Swal.fire({
