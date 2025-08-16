@@ -5,7 +5,7 @@ export default {
   USER: process.env.USER,
   PASSWORD: process.env.PASSWORD,
   DB: process.env.DB,
-  PORT: process.env.DBPORT,
+  PORT: process.env.DB_PORT,
   dialect: process.env.DIALECT,
   pool: {
     max: 5,

@@ -20,6 +20,15 @@ app.use(express.urlencoded({ extended: true }));
 import db from "./models/index.js";
 const role = db.Role;
 
+// Sync database มันคือการ 
+// sync(): สั่งให้ Sequelize ซิงค์ Models กับฐานข้อมูล
+// { force: true }: บอกให้ Sequelize บังคับซิงค์โดยจะ ลบตารางทั้งหมดทิ้งก่อน ถ้ามีตารางนั้นอยู่แล้ว แล้วค่อยสร้างใหม่ทั้งหมด
+
+// การใช้ sync({ force: true }) (ทำไมถึงต้องใช้)
+// รันเว็บครั้งแรกหรือจะรีเซ็ตใหม่จะทำให้ตารางทั้งหมดหายไปและถูกสร้างขึ้นใหม่ 
+// ถ้ามันขึ้น  Log Connection has been established successfully และ Drop and Sync ใน log แปลว่าสำเร็จ
+// *สำคัญ* ถ้าตารางขึ้นแล้วให้ปิด comment ไว้เหมือนเดิมและพร้อมใช้แล้ว เพื่อไม่ให้มาลบตารางทีหรือข้อมูลที่เราเพิ่มไป
+
 // db.sequelize.sync({ force: true }).then(() => {
 //   initRole();
 //   console.log("Drop and Sync");
@@ -34,7 +43,7 @@ app.get("/", (req, res) => {
   res.send("Restaurant Restful API Completed");
 });
 
-// use routersห
+// use routers
 app.use("/api/v1/restaurants", restaurantRouter);
 app.use("/api/v1/auth", authRouter);
 

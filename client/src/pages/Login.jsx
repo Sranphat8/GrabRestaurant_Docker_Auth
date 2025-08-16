@@ -2,9 +2,11 @@ import { useState } from "react";
 import AuthService from "../services/auth.service";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+
 const Login = () => {
   const [login, setLogin] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLogin((login) => ({ ...login, [name]: value }));
@@ -12,11 +14,14 @@ const Login = () => {
 
   const handleSubmit = async () => {
     try {
-      const currentUser = await AuthService.login(
+      // รับ response ทั้งก้อนมาจาก AuthService.login
+      const response = await AuthService.login(
         login.username,
         login.password
       );
-      if (currentUser.status === 200) {
+
+      // ตรวจสอบจาก response.status ได้อย่างถูกต้องแล้ว
+      if (response.status === 200) {
         Swal.fire({
           title: "User Login",
           text: "Login successfully!",
@@ -33,6 +38,7 @@ const Login = () => {
       });
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-6">
