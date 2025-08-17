@@ -1,132 +1,94 @@
 import React, { useState } from "react";
-import NavBar from "../components/NavBar"; 
-import Swal from "sweetalert2";
-
-const API_BASE_URL = "http://localhost:5000/api/v1/restaurants";
+import NavBar from "../components/NavBar";
 
 const Add = () => {
-  const [form, setForm] = useState({
-    title: "",
+  const [restaurant, setRestaurant] = useState({
+    name: "",
     type: "",
-    img: "",
+    imageUrl: "",
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setRestaurant({ ...restaurant, [name]: value });
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!form.title || !form.type || !form.img) {
-      Swal.fire({
-        icon: "error",
-        title: "ข้อมูลไม่ครบถ้วน",
-        text: "กรุณากรอกข้อมูลให้ครบถ้วน",
-        customClass: { popup: "rounded-xl" },
-      });
-      return;
-    }
+  const handleSubmit = async () => {
+    console.log(restaurant);
 
     try {
-      const response = await fetch(API_BASE_URL, {
+      const response = await fetch("http://localhost:5000/api/v1/restaurants", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.title,
-          type: form.type,
-          imageUrl: form.img,
-        }),
+        body: JSON.stringify(restaurant),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+      console.log(response);
 
-      if (!response.ok) {
-        let errorMessage = `HTTP error! status: ${response.status}`;
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch {
-          console.error("ไม่สามารถ parse ข้อความ error จาก backend");
-        }
-        throw new Error(errorMessage);
+      if (response.ok) {
+        alert("Restaurant added successfully!!");
+        setRestaurant({
+          name: "",
+          type: "",
+          imageUrl: "",
+        });
       }
-
-      Swal.fire({
-        icon: "success",
-        title: "เพิ่มร้านอาหารสำเร็จ!",
-        showConfirmButton: false,
-        timer: 1500,
-        customClass: { popup: "rounded-xl" },
-      }).then(() => {
-        window.location.href = "/"; 
-      });
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "เกิดข้อผิดพลาด!",
-        text: `ไม่สามารถเพิ่มร้านอาหารได้: ${err.message}`,
-        customClass: { popup: "rounded-xl" },
-      });
-      console.error("Error adding restaurant:", err);
+    } catch (error) {
+      console.log(error);
     }
   };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-base-200 to-base-100 px-4">
-      <NavBar />
-      <div className="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-xl p-8 space-y-6 mt-10">
-        <h2 className="text-3xl font-bold text-center text-neutral">เพิ่มร้านอาหาร</h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="form-control">
-            <label className="label font-semibold text-base-content">ชื่อร้านอาหาร</label>
-            <input
-              type="text"
-              name="title"
-              value={form.title}
-              onChange={handleChange}
-              className="input input-bordered input-primary w-full"
-              placeholder="เช่น ชาบูอร่อยเด็ด"
-              required
-            />
+    <div className="container mx-auto">
+      <div>
+        <h1 className="text-2xl text-center mt-2">Add new restaurant</h1>
+      </div>
+      <div className="space-y-2 flex items-center flex-col my-2 w-full">
+        <label className="input input-bordered flex items-center gap-2 w-[500px]">
+          Restaurant Name:
+          <input
+            type="text"
+            name="name"
+            value={restaurant.name}
+            className="grow w-80"
+            placeholder="Restaurant Name"
+            onChange={handleChange}
+          />
+        </label>
+        <label className="input input-bordered flex items-center gap-2 w-[500px]">
+          Restaurant Type:
+          <input
+            type="text"
+            name="type"
+            value={restaurant.type}
+            onChange={handleChange}
+            className="grow  w-80"
+            placeholder="Restaurant Type"
+          />
+        </label>
+        <label className="input input-bordered flex items-center gap-2 w-[500px]">
+          Restaurant ImageUrl:
+          <input
+            type="text"
+            className="grow"
+            value={restaurant.imageUrl}
+            onChange={handleChange}
+            placeholder="Restaurant ImageUrl"
+            name="imageUrl"
+          />
+        </label>
+        {restaurant.imageUrl && (
+          <div className="flex items-center gap-2">
+            <img className="h-32" src={restaurant.imageUrl} />
           </div>
-
-          <div className="form-control">
-            <label className="label font-semibold text-base-content">ประเภทอาหาร</label>
-            <input
-              type="text"
-              name="type"
-              value={form.type}
-              onChange={handleChange}
-              className="input input-bordered input-primary w-full"
-              placeholder="เช่น ชาบู, ปิ้งย่าง"
-              required
-            />
-          </div>
-
-          <div className="form-control">
-            <label className="label font-semibold text-base-content">ลิงก์รูปภาพ</label>
-            <input
-              type="text"
-              name="img"
-              value={form.img}
-              onChange={handleChange}
-              className="input input-bordered input-primary w-full"
-              placeholder="https://example.com/image.jpg"
-              required
-            />
-          </div>
-
-          {form.img && (
-            <div className="flex items-center justify-center mt-2">
-              <img src={form.img} alt="preview" className="h-32 rounded-md" />
-            </div>
-          )}
-
-          <button type="submit" className="btn btn-primary w-full rounded-full tracking-wide text-lg">
-            เพิ่มร้านอาหาร
+        )}
+        <div className="space-x-2">
+          <button
+            className="btn btn-outline btn-success"
+            onClick={handleSubmit}
+          >
+            Add
           </button>
-        </form>
+          <button className="btn btn-outline btn-error">Cancel</button>
+        </div>
       </div>
     </div>
   );

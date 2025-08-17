@@ -3,38 +3,49 @@ import { useAuthContext } from "../context/AuthContext";
 
 const UserProfile = () => {
   const { logout } = useAuthContext();
+
   const handleLogOut = () => {
     logout();
+    // หลัง logout กลับไปหน้า login
+    window.location.href = "/login";
   };
+
   return (
-    <div className="dropdown dropdown-end">
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn btn-ghost btn-circle avatar"
-      >
-        <div className="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-          />
-        </div>
+    <div className="relative inline-block text-left">
+      {/* Avatar */}
+      <div className="cursor-pointer" tabIndex={0}>
+        <img
+          src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          alt="User Avatar"
+          className="w-10 h-10 rounded-full border border-gray-300 shadow-sm"
+        />
       </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-      >
+
+      {/* Dropdown */}
+      <ul className="absolute right-0 mt-2 w-48 bg-white/80 backdrop-blur-md rounded-xl shadow-lg py-2 text-gray-900 z-20 hidden group-focus:block">
         <li>
-          <a className="justify-between">
+          <a
+            href="/profile"
+            className="block px-4 py-2 text-sm hover:bg-gray-100 transition"
+          >
             Profile
-            <span className="badge">New</span>
           </a>
         </li>
         <li>
-          <a>Settings</a>
+          <a
+            href="/settings"
+            className="block px-4 py-2 text-sm hover:bg-gray-100 transition"
+          >
+            Settings
+          </a>
         </li>
         <li>
-          <a onClick={handleLogOut}>Logout</a>
+          <button
+            onClick={handleLogOut}
+            className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition"
+          >
+            Logout
+          </button>
         </li>
       </ul>
     </div>

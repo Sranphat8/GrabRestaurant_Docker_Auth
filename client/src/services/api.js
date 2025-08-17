@@ -1,28 +1,27 @@
-import axios from 'axios';
-const baseURL = import.meta.env.VITE_API_URL;
-import tokenService from './token.service';
+import axios from "axios";
+const baseURL = import.meta.env.VITE_BASE_URL;
+import TokenService from "./token.service";
 
 const instance = axios.create({
-    baseURL: baseURL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: baseURL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-//add interceptors to request object
+//add interceptor to request object
 instance.interceptors.request.use(
-    (config) => {
-        //recieive after logged in
-        const token = tokenService.getLocalAccessToken();
-        if (token) {
-            config.headers["x-access-token"] = token;
-        }
-        return config;
-
-    },
-    (err) => {
-        return Promise.reject(err);
+  (config) => {
+    //recieve after logged in
+    const token = TokenService.getLocalAccessToken();
+    if (token) {
+      config.headers["x-access-token"] = token;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
 export default instance;

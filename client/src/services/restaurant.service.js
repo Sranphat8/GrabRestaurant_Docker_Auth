@@ -5,7 +5,7 @@ const RESTO_API = import.meta.env.VITE_RESTO_API;
 const getAllRestaurants = async () => {
   return await api.get(RESTO_API);
 };
-//get restaurant by Id
+//get restaurant by Id   
 const getRestaurantById = async (id) => {
   //   return await api.get(RESTO_API + "/" + id);
   return await api.get(`${RESTO_API}/${id}`);
