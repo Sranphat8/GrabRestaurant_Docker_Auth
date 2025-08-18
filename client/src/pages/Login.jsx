@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthService from "../services/auth.service";
 import { useNavigate } from "react-router";
+import { useAuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 const Login = () => {
   const [login, setLogin] = useState({ username: "", password: "" });
   const navigate = useNavigate();
+  const { login: loginFn, user } = useAuthContext();
+
+  //18 ส.ค. เพิ่ม useEffect เพื่อตรวจสอบสถานะการล็อกอิน ของ user
+  useEffect(()=>{
+    if (user) {
+      navigate("/");
+    }
+  },[user])
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLogin((login) => ({ ...login, [name]: value }));
   };
-
+//18 ส.ค. เพิ่ม loginFn(currentUser.data);
   const handleSubmit = async () => {
     try {
       const currentUser = await AuthService.login(
@@ -22,6 +31,7 @@ const Login = () => {
           text: "Login successfully!",
           icon: "success",
         }).then(() => {
+          loginFn(currentUser.data);
           navigate("/");
         });
       }

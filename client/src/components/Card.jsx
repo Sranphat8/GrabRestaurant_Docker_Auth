@@ -1,43 +1,40 @@
-import React from "react";
+import React from 'react';
+import { useAuthContext } from '../context/AuthContext';
 
-const Card = (props) => {
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/v1/restaurants/" + id,
-        {
-          method: "DELETE",
-        }
-      );
-      if (response.ok) {
-        alert("Restaurant deleted successfully!!");
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const Card = ({ restaurant, onDelete, onEdit }) => {
+  const { hasAuthority } = useAuth();
+  
+  // Check user authorities to conditionally show buttons
+  const canDelete = hasAuthority('ROLE_ADMIN');
+  const canEdit = hasAuthority('ROLE_MODERATOR');
+  
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
       <figure>
-        <img src={props.imageUrl} alt="Shoes" />
+        <img src={restaurant.imageUrl} alt={restaurant.name} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">
-          {props.name}
+          {restaurant.name}
           <div className="badge badge-secondary">NEW</div>
         </h2>
-        <p>{props.type}</p>
+        <p>{restaurant.type}</p>
         <div className="card-actions justify-end">
-          <button
-            onClick={() => handleDelete(props.id)}
-            className="btn btn-error"
-          >
-            Delete
-          </button>
-          <a href={"/update/" + props.id} className="btn btn-warning">
-            Edit
-          </a>
+          {/* Admin can delete */}
+          {canDelete && (
+            <button
+              onClick={() => onDelete(restaurant.id)}
+              className="btn btn-error"
+            >
+              Delete
+            </button>
+          )}
+          {/* Moderator can edit */}
+          {canEdit && (
+            <button onClick={() => onEdit(restaurant)} className="btn btn-warning">
+              Edit
+            </button>
+          )}
         </div>
       </div>
     </div>
