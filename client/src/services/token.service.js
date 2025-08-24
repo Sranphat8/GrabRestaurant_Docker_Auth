@@ -1,14 +1,6 @@
 const getUser = () => {
-  const userStr = localStorage.getItem("user");
-  if (!userStr) return null; // ถ้าไม่มี user ให้ return null
-  try {
-    return JSON.parse(userStr);
-  } catch (err) {
-    console.error("Error parsing user from localStorage", err);
-    return null;
-  }
+  return JSON.parse(localStorage.getItem("user"));
 };
-
 
 const setUser = (user) => {
   localStorage.setItem("user", JSON.stringify(user));

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 
 const Add = () => {
   const [restaurant, setRestaurant] = useState({

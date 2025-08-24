@@ -1,17 +1,18 @@
-import {Navigate} from "react-router";
+import { Navigate } from "react-router";
 import { useAuthContext } from "../context/AuthContext";
 
-const ModeOrAdminPage = ({children}) => {
-    const { user } = useAuthContext();
-    if (!user) {
-        return <Navigate to="/login" />;
-    }
-    if(user?.authorities.includes
-        ("ROLE_ADMIN")) {
-        return children;
-    }
-    return <Navigate to="/notallowed" />;
-
+const ModOrAdminPage = ({ children }) => {
+  const { user } = useAuthContext();
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  if (
+    user?.authorities.includes("ROLES_ADMIN") ||
+    user?.authorities.includes("ROLES_MODERATOR")
+  ) {
+    return children;
+  }
+  return <Navigate to="/notallowed" />;
 };
 
-export default ModeOrAdminPage;
+export default ModOrAdminPage;
