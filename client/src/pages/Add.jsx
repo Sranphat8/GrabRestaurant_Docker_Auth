@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
+import Restuarant
 
 const Add = () => {
   const [restaurant, setRestaurant] = useState({
@@ -15,13 +16,14 @@ const Add = () => {
     console.log(restaurant);
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/restaurants", {
-        method: "POST",
-        body: JSON.stringify(restaurant),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      // const response = await fetch("http://localhost:5000/api/v1/restaurants", {
+      //   method: "POST",
+      //   body: JSON.stringify(restaurant),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      const response = await RestaurantService.insertRestaurant(restaurant);
       console.log(response);
 
       if (response.ok) {
@@ -34,6 +36,7 @@ const Add = () => {
       }
     } catch (error) {
       console.log(error);
+      Swal.fire
     }
   };
   return (
