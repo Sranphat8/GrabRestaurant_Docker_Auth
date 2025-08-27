@@ -7,7 +7,7 @@ import Register from "../pages/Register";
 import NotAllowed from "../pages/NotAllowed";
 import AdminPage from "../pages/AdminPage";
 import UserPage from "../pages/UserPage";
-import ModOrAdminPage from "../pages/ModOrAdminPage";
+import ModOrAdmin from "../pages/ModOrAdmin";
 import Profile from "../pages/Profile";
 const router = createBrowserRouter([
   {
@@ -41,9 +41,9 @@ const router = createBrowserRouter([
   {
     path: "/update/:id",
     element: (
-      <ModOrAdminPage>
+      <ModOrAdmin>
         <Update />
-      </ModOrAdminPage>
+      </ModOrAdmin>
     ),
   },
   {

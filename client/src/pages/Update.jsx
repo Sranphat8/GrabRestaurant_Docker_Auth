@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import RestaurantService from "../services/restaurtant.service.js";
+import RestaurantService from "../services/restaurant.service.js";
 import Swal from "sweetalert2";
 const Update = () => {
   //1.Get Id from URL

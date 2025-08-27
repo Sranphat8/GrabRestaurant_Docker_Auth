@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import RestaurantService from "../services/restaurtant.service.js";
+import RestaurantService from "../services/restaurant.service.js";
 import Swal from "sweetalert2";
 const Card = (props) => {
   const { user } = useAuthContext();
