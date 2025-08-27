@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
-import Restuarant
+import RestaurantService from "../services/restaurant.service";
 
+import Swal from "sweetalert2";
 const Add = () => {
   const [restaurant, setRestaurant] = useState({
     name: "",
@@ -24,10 +25,14 @@ const Add = () => {
       //   },
       // });
       const response = await RestaurantService.insertRestaurant(restaurant);
-      console.log(response);
+      // console.log(response);
 
-      if (response.ok) {
-        alert("Restaurant added successfully!!");
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Add restaurant",
+          text: "Restaurant added successfully!",
+          icon: "success",
+        });
         setRestaurant({
           name: "",
           type: "",
@@ -36,7 +41,11 @@ const Add = () => {
       }
     } catch (error) {
       console.log(error);
-      Swal.fire
+      Swal.fire({
+        title: "Add restaurant",
+        text: error?.response?.data?.message || error.message,
+        icon: "error",
+      });
     }
   };
   return (

@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
 import { useAuthContext } from "../context/AuthContext";
 
-const ModOrAdminPage = ({ children }) => {
+const ModOrAdmin = ({ children }) => {
   const { user } = useAuthContext();
   if (!user) {
     return <Navigate to="/login" />;
@@ -15,4 +15,4 @@ const ModOrAdminPage = ({ children }) => {
   return <Navigate to="/notallowed" />;
 };
 
-export default ModOrAdminPage;
+export default ModOrAdmin;

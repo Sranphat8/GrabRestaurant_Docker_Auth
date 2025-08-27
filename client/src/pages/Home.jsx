@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Restaurants from "../components/Restaurants";
-import RestaurantService from "../services/restaurtant.service";
+import RestaurantService from "../services/restaurant.service";
+
 import Swal from "sweetalert2";
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
