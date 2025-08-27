@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
-
+import RestaurantService from "../services/restaurtant.service.js";
+import Swal from "sweetalert2";
 const Add = () => {
   const [restaurant, setRestaurant] = useState({
     name: "",
@@ -15,17 +16,22 @@ const Add = () => {
     console.log(restaurant);
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/restaurants", {
-        method: "POST",
-        body: JSON.stringify(restaurant),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response);
+      // const response = await fetch("http://localhost:5000/api/v1/restaurants", {
+      //   method: "POST",
+      //   body: JSON.stringify(restaurant),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      const response = await RestaurantService.insertRestaurant(restaurant);
+      // console.log(response);
 
-      if (response.ok) {
-        alert("Restaurant added successfully!!");
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Add restaurant",
+          text: "Restaurant added successfully!",
+          icon: "success",
+        });
         setRestaurant({
           name: "",
           type: "",
@@ -34,6 +40,11 @@ const Add = () => {
       }
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: "Add restaurant",
+        text: error?.response?.data?.message || error.message,
+        icon: "error",
+      });
     }
   };
   return (
