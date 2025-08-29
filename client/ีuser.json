@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "username": "david_p",
+      "name": "David Parker",
+      "email": "david.p@example.com",
+      "password": "password123!"
+    },
+    {
+      "username": "sarah_w",
+      "name": "Sarah Williams",
+      "email": "sarah.w@example.com",
+      "password": "password123!"
+    },
+    {
+      "username": "mike_j",
+      "name": "Michael Jones",
+      "email": "mike.j@example.com",
+      "password": "password123!"
+    },
+    {
+      "username": "emily_c",
+      "name": "Emily Chen",
+      "email": "emily.c@example.com",
+      "password": "password123!"
+    },
+    {
+      "username": "james_t",
+      "name": "James Taylor",
+      "email": "james.t@example.com",
+      "password": "password123!"
+    }
+  ]
+}
