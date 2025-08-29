@@ -3,11 +3,11 @@ import { useAuthContext } from "../context/AuthContext";
 
 const Profile = () => {
   const { user, logout } = useAuthContext();
-  // ตัวอย่างข้อมูลผู้ใช้ (อาจมาจาก API จริงในภายหลัง)
+
   const userProfile = {
     name: user.userInfo.name,
     email: user.userInfo.email,
-    avatar: "https://i.pravatar.cc/150?img=3", // รูป avatar จาก pravatar.cc
+    avatar: "https://i.pravatar.cc/400?img=60", // รูป avatar จาก pravatar.cc
     role: user.authorities.toString(),
   };
   const handleLogOut = () => {

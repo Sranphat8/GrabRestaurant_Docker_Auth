@@ -1,13 +1,15 @@
 import React from "react";
 import Card from "./Card";
 import { useAuthContext } from "../context/AuthContext";
+
 const Restaurants = ({ restaurants }) => {
   const { user } = useAuthContext();
+
   return (
     <div className="flex">
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-4 w-full">
         {restaurants &&
-        user &&
+          user &&
           restaurants.map((restaurant) => {
             return (
               <Card
@@ -19,8 +21,18 @@ const Restaurants = ({ restaurants }) => {
               />
             );
           })}
-          {!user && <div>You don't have permission to access this content</div>}
-          {!restaurants && <div>No content</div>}
+
+        {!user && (
+          <div className="w-full flex justify-center mt-10 text-lg font-semibold text-gray-700">
+            You don't have permission to access this content
+          </div>
+        )}
+
+        {!restaurants && (
+          <div className="w-full flex justify-center mt-10 text-lg font-semibold text-gray-700">
+            No content
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,35 +1,17 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "../components/NavBar";
 import Restaurants from "../components/Restaurants";
 import RestaurantService from "../services/restaurant.service";
-
 import Swal from "sweetalert2";
+
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [filetedRestaurants, setFilteredRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
-  const handleSearch = (keyword) => {
-    if (keyword === "") {
-      setFilteredRestaurants(restaurants);
-      return;
-    }
-    const result = restaurants.filter((restaurant) => {
-      return (
-        restaurant.title.toLowerCase().includes(keyword.toLowerCase()) ||
-        restaurant.type.toLowerCase().includes(keyword.toLowerCase())
-      );
-    });
-    setFilteredRestaurants(result);
-    // console.log(result);
-  };
+  // โหลดข้อมูลร้านอาหาร
   useEffect(() => {
-    //call api: getAllRestaurants
-
     const getAllRestaurant = async () => {
       try {
         const response = await RestaurantService.getAllRestaurants();
-        // console.log(response);
-
         if (response.status === 200) {
           setRestaurants(response.data);
           setFilteredRestaurants(response.data);
@@ -44,24 +26,32 @@ const Home = () => {
     };
     getAllRestaurant();
   }, []);
+
+  // ฟังก์ชันค้นหา
+  const handleSearch = (keyword) => {
+    if (!keyword) {
+      setFilteredRestaurants(restaurants);
+      return;
+    }
+    const filtered = restaurants.filter(
+      (r) =>
+        r.name?.toLowerCase().includes(keyword.toLowerCase()) ||
+        r.type?.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setFilteredRestaurants(filtered);
+  };
+
   return (
     <div className="container mx-auto">
-      {
-        //Navigation Bar
-      }
 
-      {
-        //Header
-      }
       <div>
         <h1 className="title justify-center text-3xl text-center m-5 p-5">
           Grab Restaurant
         </h1>
       </div>
-      {
-        //Search Box
-      }
-      <div className="mb-5 flex justify-center items-center ">
+
+      {/* Search Box */}
+      <div className="mb-5 flex justify-center items-center">
         <label className="input flex items-center gap-2 w-2xl">
           <svg
             className="h-[1em] opacity-50"
@@ -83,16 +73,13 @@ const Home = () => {
             type="search"
             name="keyword"
             onChange={(e) => handleSearch(e.target.value)}
-            required
             placeholder="Search"
           />
         </label>
       </div>
 
-      {
-        // Result
-      }
-      <Restaurants restaurants={filetedRestaurants} />
+      {/* ส่งค่าไปที่ Restaurants */}
+      <Restaurants restaurants={filteredRestaurants} />
     </div>
   );
 };
