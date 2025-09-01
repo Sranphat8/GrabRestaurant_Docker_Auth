@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "./components/NavBar.jsx";
+import Navbar from "../components/Navbar";
 import RestaurantService from "../services/restaurant.service";
 
 import Swal from "sweetalert2";

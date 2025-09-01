@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuthContext } from "../context/AuthContext";
 import UserProfile from "./UserProfile";
-const NavBar = () => {
+const Navbar = () => {
   const { user } = useAuthContext();
   console.log(user);
 
@@ -92,4 +92,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;
