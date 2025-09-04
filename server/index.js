@@ -30,10 +30,10 @@ const role = db.Role;
 // ถ้ามันขึ้น  Log Connection has been established successfully และ Drop and Sync ใน log แปลว่าสำเร็จ
 // *สำคัญ* ถ้าตารางขึ้นแล้วให้ปิด comment ไว้เหมือนเดิมและพร้อมใช้แล้ว เพื่อไม่ให้มาลบตารางทีหรือข้อมูลที่เราเพิ่มไป
 
-db.sequelize.sync({ force: true }).then(() => {
-  initRole();
-  console.log("Drop and Sync");
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   initRole();
+//   console.log("Drop and Sync");
+// });
 
 const initRole = () => {
   role.create({ id: 1, name: "user" });
